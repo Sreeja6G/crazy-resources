@@ -415,9 +415,7 @@ const styles = {
   },
   title: {
     fontSize: "48px",
-    background: "linear-gradient(135deg, #06b6d4, #10b981, #8b5cf6)",
-    WebkitBackgroundClip: "text",
-    WebkitTextFillColor: "transparent",
+    color: "#06b6d4",
     textAlign: "center",
     marginBottom: "10px",
     fontWeight: "bold",
