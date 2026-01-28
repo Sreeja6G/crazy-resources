@@ -13,7 +13,14 @@ export default function Login({ setCurrentPage, setUser }) {
     setSuccess("");
     setLoading(true);
 
+    if (!email || !password) {
+      setError("❌ Email and password are required");
+      setLoading(false);
+      return;
+    }
+
     try {
+      console.log("Attempting login with email:", email);
       const response = await fetch("http://localhost:5000/api/auth/login", {
         method: "POST",
         headers: {
@@ -22,23 +29,28 @@ export default function Login({ setCurrentPage, setUser }) {
         body: JSON.stringify({ email, password }),
       });
 
+      console.log("Response status:", response.status);
       const data = await response.json();
+      console.log("Response data:", data);
 
       if (response.ok) {
+        setSuccess("✅ Login successful! Welcome back...");
         // Store user data in localStorage immediately
         localStorage.setItem("user", JSON.stringify(data.student));
         // Update user state immediately
         setUser(data.student);
-        setSuccess("Login successful! Redirecting...");
         // Navigate after user state is set
         setTimeout(() => {
           setCurrentPage("home");
         }, 1500);
       } else {
-        setError(data.message || "Login failed");
+        const errorMsg = data.message || "Login failed. Invalid credentials.";
+        console.error("Login error:", errorMsg);
+        setError(`❌ ${errorMsg}`);
       }
     } catch (err) {
-      setError("Error connecting to server. Make sure backend is running on http://localhost:5000");
+      console.error("Login error:", err);
+      setError("❌ Error connecting to server. Make sure backend is running on http://localhost:5000");
     } finally {
       setLoading(false);
     }

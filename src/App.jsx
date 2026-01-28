@@ -10,6 +10,10 @@ import AdminDashboard from "./pages/AdminDashboard";
 import CyberSecurity from "./pages/CyberSecurity";
 import SupportTeam from "./pages/SupportTeam";
 import RoadMaps from "./pages/RoadMaps";
+import Jobs from "./pages/Jobs";
+import CodingOpportunities from "./pages/CodingOpportunities";
+import FreeCourses from "./pages/FreeCourses";
+import MoneyMakingSkills from "./pages/MoneyMakingSkills";
 
 export default function App() {
   const [user, setUser] = useState(() => {
@@ -19,6 +23,7 @@ export default function App() {
   
   const [currentPage, setCurrentPage] = useState(user ? "home" : "login");
   const [selectedInternship, setSelectedInternship] = useState(null);
+  const [selectedSkill, setSelectedSkill] = useState(null);
 
   return (
     <>
@@ -58,6 +63,18 @@ export default function App() {
       )}
       {currentPage === "roadmaps" && (
         <RoadMaps setCurrentPage={setCurrentPage} />
+      )}
+      {currentPage === "jobs" && (
+        <Jobs setCurrentPage={setCurrentPage} />
+      )}
+      {currentPage === "coding-opportunities" && (
+        <CodingOpportunities setCurrentPage={setCurrentPage} />
+      )}
+      {currentPage === "free-courses" && (
+        <FreeCourses setCurrentPage={setCurrentPage} />
+      )}
+      {currentPage === "money-making-skills" && (
+        <MoneyMakingSkills setCurrentPage={setCurrentPage} setSelectedSkill={setSelectedSkill} />
       )}
     </>
   );

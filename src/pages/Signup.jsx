@@ -28,23 +28,30 @@ export default function Signup({ setCurrentPage }) {
 
     // Validation
     if (!formData.name || !formData.email || !formData.password || !formData.confirmPassword || !formData.college || !formData.expectations) {
-      setError("All fields are required");
+      setError("❌ All fields are required");
       return;
     }
 
     if (formData.password !== formData.confirmPassword) {
-      setError("Passwords do not match");
+      setError("❌ Passwords do not match");
       return;
     }
 
     if (formData.password.length < 6) {
-      setError("Password must be at least 6 characters");
+      setError("❌ Password must be at least 6 characters");
       return;
     }
 
     setLoading(true);
 
     try {
+      console.log("Sending signup data:", {
+        name: formData.name,
+        email: formData.email,
+        college: formData.college,
+        expectations: formData.expectations,
+      });
+
       const response = await fetch("http://localhost:5000/api/auth/signup", {
         method: "POST",
         headers: {
@@ -60,9 +67,10 @@ export default function Signup({ setCurrentPage }) {
       });
 
       const data = await response.json();
+      console.log("Signup response:", data);
 
       if (response.ok) {
-        setSuccess("Signup successful! Redirecting to login...");
+        setSuccess("✅ Signup Successful! Your account has been created. Redirecting to login...");
         // Clear form on success
         setFormData({
           name: "",
@@ -75,12 +83,15 @@ export default function Signup({ setCurrentPage }) {
         // Navigate after a short delay to show success message
         setTimeout(() => {
           setCurrentPage("login");
-        }, 1500);
+        }, 2000);
       } else {
-        setError(data.message || "Signup failed");
+        const errorMsg = data.message || "Signup failed. Please try again.";
+        console.error("Signup error:", errorMsg);
+        setError(`❌ ${errorMsg}`);
       }
     } catch (err) {
-      setError("Error connecting to server. Make sure backend is running on http://localhost:5000");
+      console.error("Signup connection error:", err);
+      setError("❌ Error connecting to server. Make sure backend is running on http://localhost:5000");
     } finally {
       setLoading(false);
     }

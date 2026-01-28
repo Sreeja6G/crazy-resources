@@ -60,6 +60,9 @@ export default function AdminDashboard({ setCurrentPage }) {
       {error && (
         <div style={styles.errorBox}>
           <p style={styles.errorText}>⚠️ {error}</p>
+          <button onClick={fetchStudents} style={styles.refreshButton}>
+            🔄 Refresh Data
+          </button>
         </div>
       )}
 
@@ -219,15 +222,30 @@ const styles = {
   },
   errorBox: {
     margin: "20px 40px",
-    padding: "15px",
+    padding: "15px 20px",
     background: "rgba(239, 68, 68, 0.1)",
     border: "2px solid rgba(239, 68, 68, 0.3)",
     borderRadius: "10px",
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
   },
   errorText: {
     fontSize: "14px",
     color: "#ef4444",
     margin: 0,
+  },
+  refreshButton: {
+    padding: "8px 16px",
+    background: "linear-gradient(135deg, #06b6d4, #0ea5e9)",
+    color: "white",
+    border: "none",
+    borderRadius: "6px",
+    fontWeight: "600",
+    fontSize: "13px",
+    cursor: "pointer",
+    transition: "all 0.3s ease",
+    whiteSpace: "nowrap",
   },
   emptyBox: {
     padding: "60px 20px",
